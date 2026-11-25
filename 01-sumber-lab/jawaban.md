@@ -137,7 +137,7 @@ gateway-k1.lab-arp-k1 (172.18.0.3) at 46:5f:61:ac:f1:72 [ether] PERM on eth0
 
 * **Dampak ARP Spoofing:** Sebelum serangan, IP `172.18.0.3` (`gateway-k1`) dipetakan ke MAC aslinya `46:5f:61:ac:f1:72`. Ketika `penyerang-k1` menjalankan `arpspoof`, paket ARP Reply palsu meracuni cache ARP korban sehingga MAC milik `172.18.0.3` berubah menjadi `fe:55:83:f5:c1:55` (MAC milik penyerang) dan membelokkan lalu lintas jaringan korban.
 * **Mitigasi Static ARP:** Penerapan entri statis melalui `arp -s 172.18.0.3 46:5f:61:ac:f1:72` mengembalikan pemetaan ke MAC asli dengan status `PERM` (*permanent*), sehingga tabel ARP tidak dapat ditimpa oleh paket ARP Reply palsu secara dinamis.
-
+- **Mitigasi Lain Selain Static ARP (Dynamic ARP Inspection):** Pada jaringan berskala besar yang sulit dikelola secara statis, serangan ARP spoofing dapat dicegah dengan mengaktifkan fitur **Dynamic ARP Inspection** pada perangkat *managed switch* yang dikombinasikan dengan **DHCP Snooping**. Switch akan mencatat pasangan alamat IP dan MAC yang sah dari lalu lintas DHCP ke dalam tabel *binding* tepercaya, lalu secara otomatis memblokir paket ARP Reply palsu dari port yang tidak sesuai dengan catatan tabel tersebut.
 ---
 
 ## Tugas 4 (Pertemuan 4): Analisis Handshake WPA2
